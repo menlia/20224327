@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATM Withdrawal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .balance {
+            font-size: 18px;
+            margin: 20px 0;
+            color: #333;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .message {
+            margin-top: 20px;
+            padding: 10px;
+            text-align: center;
+            color: white;
+        }
+
+        .error {
+            background-color: #dc3545;
+        }
+
+        .success {
+            background-color: #28a745;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>ATM Withdrawal</h1>
+
+        <div class="balance">
+            <strong>Current Balance:</strong> $<span id="balance">100000</span>
+        </div>
+
+        <div class="input-group">
+            <label for="amount">Amount to Withdraw:</label>
+            <input type="number" id="amount" placeholder="Enter amount" min="1" />
+        </div>
+
+        <button onclick="handleWithdrawal()">Withdraw</button>
+
+        <div id="message" class="message"></div>
+    </div>
+
+    <script>
+        
+        let balance = 100000;
+
+        
+        function handleWithdrawal() {
+            const amount = parseFloat(document.getElementById("amount").value);
+            const messageDiv = document.getElementById("message");
+
+            
+            if (isNaN(amount) || amount <= 0) {
+                messageDiv.textContent = "Please enter a valid withdrawal amount greater than 0.";
+                messageDiv.className = "message error";
+                return;
+            }
+
+            
+            if (amount > balance) {
+                messageDiv.textContent = "Insufficient funds. You do not have enough balance.";
+                messageDiv.className = "message error";
+                return;
+            }
+
+            
+            balance -= amount;
+            document.getElementById("balance").textContent = balance;
+
+            
+            messageDiv.textContent = "Withdrawal successful! You have withdrawn $${amount}.Remaining balance: $${balance}.";
+            messageDiv.className = "message success";
+        }
+    </script>
+
+</body>
+</html>
