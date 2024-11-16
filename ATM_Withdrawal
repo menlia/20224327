@@ -1,0 +1,22 @@
+class ATM:
+    def __init__(self):
+        self.screen = Screen()
+        self.keypad = Keypad()
+        self.cash_dispenser = CashDispenser(500)  # ATM starts with $500
+
+    def start_session(self):
+        self.screen.display_message("Welcome to the ATM!")
+        account = Account("A001", 300)  # Account starts with $300
+        user_input = int(self.keypad.get_input("Enter the amount to withdraw: "))
+
+        if user_input > account.check_balance():
+            self.screen.display_error("Insufficient funds in your account.")
+        elif not self.cash_dispenser.check_cash(user_input):
+            self.screen.display_error("ATM has insufficient cash.")
+        else:
+            account.withdraw(user_input)
+            self.cash_dispenser.dispense_cash(user_input)
+            self.screen.display_message(f"Please take your cash: ${user_input}")
+            self.screen.display_message(f"Remaining balance: ${account.check_balance()}")
+        
+        self.screen.display_message("Thank you for using the ATM!")
